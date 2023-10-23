@@ -2,9 +2,9 @@
 
 ## Description
 
-Many of the [devx tools](https://puppetlabs.github.io/content-and-tooling-team/tools/) are ruby repositories.  When developing or testing against these, I want to be able to "sandbox" the code in its directory locally installing gem dependencies and configuring a ruby version.  In other words, I want to be able to use the code without interfering with the system ruby environment.  One of the ways to achieve this is to add some special bundler and direnv configuration to the directory.
+Many of the [devx tools](https://puppetlabs.github.io/content-and-tooling-team/tools/) are ruby repositories.  When developing or testing against these, I want to be able to "sandbox" the code in its directory locally installing gem dependencies and configuring a ruby version.  In other words, I want to be able to use the code without interfering with the system ruby environment.
 
-Therefore, I decided to gather these configuration into a PCT template so that I can quickly apply them to any directory that I choose.  This makes it easy to either sandbox an existing repository or begin new ruby development altogether.
+Therefore, I decided to gather some  ``bundler`` and ``direnv`` configuration into a PCT template.  This makes it easy to either sandbox an existing repository or begin new ruby development altogether.
 
 ## Pre-requisites
 
@@ -38,6 +38,24 @@ pct new --list
 ```
 
 ## Usage
+
+### Add bundler configuration to a directory
+
+```bash
+# setup bundler for a ruby directory via PCT
+cd <ruby project directory>
+pct new devx/ruby-config
+
+# ensure direnv intitializes rbenv, etc
+direnv allow
+
+# select a ruby version for the directory
+rbenv versions
+rbenv local <choose_a_ruby_version>
+
+# assuming a Gemfile already exists in this directory, then...
+bundle install
+```
 
 ## Appendix
 
