@@ -1,0 +1,11 @@
+---
+template:
+  id: ruby-config
+  author: devx
+  type: item
+  display: Ruby Bundle Config
+  version: 0.1.0
+  url: https://github.com/repo/of/template
+
+puppet_class:
+  module_name: module_name
