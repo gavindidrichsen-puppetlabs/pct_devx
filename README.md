@@ -39,6 +39,16 @@ pct new --list
 
 ## Usage
 
+As this template is specifically for ruby configuration then there are some very specific design decisions:
+
+`.envrc`:
+
+* should fail if the current directory does not have a `.ruby-version` file.  The `.ruby-version` file is a simple text file that sets the version of Ruby that should be used when working within a specific directory.  In the context of rbenv, the .ruby-version file is particularly important because rbenv uses this file to determine which version of Ruby to use. When you cd into a directory, rbenv checks for a .ruby-version file. If it finds one, it switches to the version of Ruby specified in the file. If it doesn't find one, it uses the global Ruby version.
+* should load any "parent" `.envrc` if they exist.  It achieves this by including the `source_up` command.  The source_up command in .envrc is important because it allows you to inherit and use environment variables defined in a parent directory's .envrc file.
+* should initialize rbenv.  In other words, `eval "$(rbenv init - zsh)"` must be run.  NOTE: I've chosen not to have this run on every terminal login but only for ruby specific development.  One of the main reasons I've done this is because rbenv sets up the $PATH and I've noticed that it can cause normal utilities like `curl` to fail.
+* should add the `.direnv/bin` to the `PATH`.  The reason for this is because when `bundle install` runs it not only installs the gems but also the binaries.  Without this directory on the PATH, then the binaries are not available on the command-line.
+
+
 ### Add bundler configuration to a directory
 
 ```bash
