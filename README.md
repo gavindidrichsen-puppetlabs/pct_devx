@@ -17,8 +17,12 @@ Therefore, I decided to gather some  ``bundler`` and ``direnv`` configuration in
 Do the following to install PCT and configure the devx templates (See Appendix for [sample output](#sample-setup-output)):
 
 ```bash
-# install
-curl -L https://pup.pt/pdkgo/install.sh | sh
+# install via curl no longer works
+# curl -L https://pup.pt/pdkgo/install.sh | sh
+# ...instead install 
+git clone https://github.com/puppetlabs-toy-chest/pct.git
+cd pct/scripts
+./install.sh
 
 # Add puppet content templates (pct) to $PATH
 export PATH=${PATH}:~/.puppetlabs/pct
