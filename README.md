@@ -4,7 +4,31 @@
 
 Many of the [devx tools](https://puppetlabs.github.io/content-and-tooling-team/tools/) are ruby repositories.  When developing or testing against these, I want to be able to "sandbox" the code in its directory locally installing gem dependencies and configuring a ruby version.  In other words, I want to be able to use the code without interfering with the system ruby environment.
 
-Therefore, I decided to gather some  ``bundler`` and ``direnv`` configuration into a PCT template.  This makes it easy to either sandbox an existing repository or begin new ruby development altogether.
+For example, the following commands and files will setup such a sandbox.  This assumes the presense of `rbenv`
+
+```bash
+# setup local bundle: this creates the `.bundle/config` file
+bundle config set --local path ".direnv/ruby/gems"
+bundle config set --local gemfile "Gemfile"
+bundle config set --local bin ".direnv/bin"
+
+# verify config
+bundle config
+
+# initialize rbenv (if this isn't done automatically via your .zshrc)
+eval "$(rbenv init - zsh)" 
+
+# set the local ruby environment: this creates a `.ruby-version` file
+rbenv local 2.7.5
+
+# verify rbenv version
+rbenv version
+
+# include the ruby executables on the $PATH
+export PATH=.direnv/bin:${PATH}
+```
+
+This repository gathers together scaffolding to achieve all of the above with a single command `pct new devx/ruby-config` This makes it easy to either sandbox an existing repository or begin new ruby development altogether.
 
 ## Pre-requisites
 
