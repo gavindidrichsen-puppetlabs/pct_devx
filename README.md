@@ -31,11 +31,9 @@ rbenv local 2.7.5
 rbenv version
 ```
 
-* create a `.envrc` direnv file so that ruby BUNDLER and GEM environment variables are setup properly
+* create a `.envrc` direnv file with the following contents, which will setup BUNDLER and GEM environment variables:
 
 ```bash
-# .envrc
-
 # initialize rbenv shims, e.g., eval "$(rbenv init - zsh)" 
 use rbenv
 
