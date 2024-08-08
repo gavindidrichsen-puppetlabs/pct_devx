@@ -2,9 +2,11 @@
 
 ## Description
 
-Many of the [devx tools](https://puppetlabs.github.io/content-and-tooling-team/tools/) are ruby repositories.  When developing or testing against these, I want to be able to "sandbox" the code in its directory locally installing gem dependencies and configuring a ruby version.  In other words, I want to be able to use the code without interfering with the system ruby environment.
+Many of the [devx tools](https://puppetlabs.github.io/content-and-tooling-team/tools/) are ruby repositories.  When developing or testing against these, I want to be able to "sandbox" the code in its directory locally installing gem dependencies and configuring a ruby version.  In other words, I want to be able to use the code without interfering with the system ruby environment.  This repository gathers together scaffolding to achieve all of the above with a single command `pct new devx/ruby-config` This makes it easy to either sandbox an existing repository or begin new ruby development altogether.
 
-For example, the following commands and files will setup such a sandbox.  This assumes the presense of `rbenv`
+For example, manual ruby configuration as follows will setup such a sandbox and assumes the presense of `rbenv` and `direnv`:
+
+* setup bundler for local development only
 
 ```bash
 # setup local bundle: this creates the `.bundle/config` file
@@ -14,21 +16,35 @@ bundle config set --local bin ".direnv/bin"
 
 # verify config
 bundle config
+```
 
-# initialize rbenv (if this isn't done automatically via your .zshrc)
-eval "$(rbenv init - zsh)" 
+* configure a particular version of ruby, e.g., 2.7.5
+
+```bash
+# initialize rbenv with the following if this isn't done automatically via your .zshrc)
+# eval "$(rbenv init - zsh)" 
 
 # set the local ruby environment: this creates a `.ruby-version` file
 rbenv local 2.7.5
 
 # verify rbenv version
 rbenv version
-
-# include the ruby executables on the $PATH
-export PATH=.direnv/bin:${PATH}
 ```
 
-This repository gathers together scaffolding to achieve all of the above with a single command `pct new devx/ruby-config` This makes it easy to either sandbox an existing repository or begin new ruby development altogether.
+* create a `.envrc` direnv file so that ruby BUNDLER and GEM environment variables are setup properly
+
+```bash
+# .envrc
+
+# initialize rbenv shims, e.g., eval "$(rbenv init - zsh)" 
+use rbenv
+
+# setup all bundle/gem environment variables
+layout ruby
+
+```
+
+On the terminal execute `direnv allow` to enable the direnv configuration above.
 
 ## Pre-requisites
 
